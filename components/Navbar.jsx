@@ -1,9 +1,10 @@
 'use client';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react'; // [FIX] Menambahkan useEffect
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { TagsIcon } from 'lucide-react';
+import LiveSearch from '@/components/LiveSearch';
 
 // ─── Icons ────────────────────────────────────────────────
 function HomeIcon({ active }) {
@@ -138,7 +139,6 @@ export default function Navbar() {
   const router = useRouter();
   const { user, logout } = useAuth();
   const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQ, setSearchQ] = useState('');
 
   // ==========================================
   // [FIX] STATE & LOGIKA NOTIFIKASI
@@ -171,14 +171,6 @@ export default function Navbar() {
   if (pathname.startsWith('/read/')) return null;
   if (pathname.startsWith('/login')) return null;
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchQ.trim()) {
-      router.push(`/manga?q=${encodeURIComponent(searchQ.trim())}`);
-      setSearchOpen(false);
-      setSearchQ('');
-    }
-  };
 
   const NAV_ITEMS = [
     { href: '/', icon: HomeIcon, label: 'Home' },
@@ -257,20 +249,7 @@ export default function Navbar() {
       </header>
 
       {searchOpen && (
-        <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-start justify-center pt-20 px-4" onClick={() => setSearchOpen(false)}>
-          <form className="w-full max-w-lg animate-slide-up" onClick={(e) => e.stopPropagation()} onSubmit={handleSearch}>
-            <div className="flex items-center gap-3 bg-bg-card border border-border rounded-2xl px-4 py-3 shadow-2xl">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5 text-text-muted flex-shrink-0"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
-              <input autoFocus type="text" value={searchQ} onChange={(e) => setSearchQ(e.target.value)} placeholder="Cari manga, manhwa, manhua..." className="flex-1 bg-transparent text-text-primary placeholder-text-muted outline-none text-base" />
-              {searchQ && (
-                <button type="button" onClick={() => setSearchQ('')} className="text-text-muted hover:text-text-primary">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
-                </button>
-              )}
-            </div>
-            <p className="text-text-muted text-xs text-center mt-3">Tekan Enter untuk mencari • Tap di luar untuk tutup</p>
-          </form>
-        </div>
+        <LiveSearch onClose={() => setSearchOpen(false)} />
       )}
 
       <nav className="fixed bottom-0 left-0 right-0 z-50 bg-bg-primary/95 backdrop-blur-md border-t border-border">

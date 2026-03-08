@@ -7,9 +7,16 @@ import SyncBanner from '@/components/SyncBanner';
 
 export const revalidate = 300;
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://kiryuu.online';
+const SITE_NAME_ENV = process.env.NEXT_PUBLIC_SITE_NAME || 'Kiryuu';
+
 export const metadata = {
   title: `${process.env.NEXT_PUBLIC_SITE_NAME} - Baca Manga Komik Bahasa Indonesia`,
   description: `Baca Manga Komik Bahasa Indonesia Update chapter terbaru setiap hari di ${process.env.NEXT_PUBLIC_SITE_NAME}!`,
+  alternates: {
+    canonical: SITE_URL,
+    amphtml: `${SITE_URL}/amp`,
+  },
 };
 
 export default async function HomePage() {

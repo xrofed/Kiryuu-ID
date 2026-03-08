@@ -30,7 +30,10 @@ export async function generateMetadata({ params }) {
       images: [{ url: coverImage, alt: manga.title }],
       type: 'book',
     },
-    alternates: { canonical: `${SITE_URL}/manga/${params.slug}` },
+    alternates: {
+      canonical: `${SITE_URL}/manga/${params.slug}`,
+      amphtml: `${SITE_URL}/amp/manga/${params.slug}`,
+    },
   };
 }
 
