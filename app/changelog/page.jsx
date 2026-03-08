@@ -30,11 +30,6 @@ const CHANGELOGS = [
         title: 'Perbaikan Limit Library & History',
         desc: 'API Library dan History tidak lagi memuat 9999 data sekaligus. Kini menggunakan limit 100 untuk performa yang lebih baik.',
       },
-      {
-        type: 'fix',
-        title: 'Integrasi Google AdSense (ads.txt)',
-        desc: 'File ads.txt untuk verifikasi publisher Google AdSense telah ditambahkan dan dapat diakses di /ads.txt.',
-      },
     ],
   },
 
